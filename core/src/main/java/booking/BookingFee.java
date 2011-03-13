@@ -8,6 +8,10 @@ package booking;
  */
 public interface BookingFee
 {
+    public void setBookable( boolean bookable );
+
+    public boolean getBookable();
+
     public void setBookingFee( float fee );
 
     public float getBookingFee();

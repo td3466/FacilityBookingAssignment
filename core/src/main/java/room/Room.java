@@ -1,6 +1,5 @@
 package room;
 
-import booking.BookableItem;
 import booking.BookingFee;
 
 /**
@@ -9,7 +8,7 @@ import booking.BookingFee;
  * @author edward.yakop@mincom.com
  * @since 0.3
  */
-public class Room implements BookableItem, BookingFee
+public class Room implements BookingFee
 {
     private String Id;
 
@@ -17,8 +16,8 @@ public class Room implements BookableItem, BookingFee
 
     private int capacity;
 
-    //Encapsulated by BookableItem interface
-    private boolean bookableItem;
+    //Encapsulated by BookingFee interface
+    private boolean bookable;
 
     //Encapsulated by BookingFee interface
     private float bookingFee;
@@ -55,23 +54,19 @@ public class Room implements BookableItem, BookingFee
 
 
     /*
-     * Methods implemented as part of BookableItem interface
+     * Methods implemented as part of BookingFee interface
      */
     public void setBookable( boolean bookable )
     {
         //To change body of implemented methods use File | Settings | File Templates.
-        bookableItem = bookable;
+        this.bookable = bookable;
     }
 
     public boolean getBookable()
     {
-        return bookableItem;  //To change body of implemented methods use File | Settings | File Templates.
+        return bookable;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-
-    /*
-     * Methods implemented as part of BookingFee interface
-     */
     public void setBookingFee( float fee )
     {
         //To change body of implemented methods use File | Settings | File Templates.

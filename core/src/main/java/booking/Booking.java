@@ -2,20 +2,22 @@ package booking;
 
 import java.util.ArrayList;
 import members.AbstractMemberEntity;
+import members.staff.Staff;
+import members.student.Student;
 
 /**
- * TODO: Documentation
- * Assumption is that bookings are currently for members only
+ * TODO: Documentation Assumption is that bookings are currently for members only
  *
  * @author edward.yakop@mincom.com
- * @since 0.3
+ *         <p/>
+ *         26/2/2011 Removed bookableItems. It was better to associate a booking with the Room/Equipment, rather than
+ *         the Room/equipment with the booking.
  */
-public class Booking extends AbstractBooking
+public abstract class Booking extends AbstractBooking
 {
     private AbstractMemberEntity bookingName;
 
-    private ArrayList<BookableItem> bookableItems = new ArrayList<BookableItem>(  );
-
+    private float fee;
 
     public AbstractMemberEntity getBookingName()
     {
@@ -25,26 +27,5 @@ public class Booking extends AbstractBooking
     public void setBookingName( AbstractMemberEntity bookingName )
     {
         this.bookingName = bookingName;
-    }
-
-    public ArrayList<BookableItem> getBookableItems()
-    {
-        return bookableItems;
-    }
-
-    public void addBookingItem( BookableItem booking )
-    {
-        //TODO: Only add if a bookable item
-
-        bookableItems.add( booking );
-    }
-
-    public void removeBookingItem( BookableItem booking )
-    {
-        //Remove if contained in list
-        if( bookableItems.contains( booking ) )
-        {
-            bookableItems.remove( booking );
-        }
     }
 }
