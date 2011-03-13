@@ -1,9 +1,6 @@
 package booking;
 
-import java.util.ArrayList;
 import members.AbstractMemberEntity;
-import members.staff.Staff;
-import members.student.Student;
 
 /**
  * TODO: Documentation Assumption is that bookings are currently for members only
@@ -12,12 +9,18 @@ import members.student.Student;
  *         <p/>
  *         26/2/2011 Removed bookableItems. It was better to associate a booking with the Room/Equipment, rather than
  *         the Room/equipment with the booking.
+ *         <p/>
+ *         13/3/2011 Note. This class has been created to distinguish between bookings for members, and in the future
+ *         outside members.
+ *         Added a property for a booking, to associate a member with a booking
+ *
+ * TODO: Apply member charges to the booking.
  */
-public abstract class Booking extends AbstractBooking
+public class Booking
 {
     private AbstractMemberEntity bookingName;
 
-    private float fee;
+    private AbstractBooking booking;
 
     public AbstractMemberEntity getBookingName()
     {
@@ -28,4 +31,15 @@ public abstract class Booking extends AbstractBooking
     {
         this.bookingName = bookingName;
     }
+
+    public AbstractBooking getBooking()
+    {
+        return booking;
+    }
+
+    public void setBooking( AbstractBooking booking )
+    {
+        this.booking = booking;
+    }
+
 }

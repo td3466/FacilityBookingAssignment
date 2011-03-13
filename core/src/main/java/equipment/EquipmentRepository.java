@@ -1,9 +1,7 @@
 package equipment;
 
 import Data.EquipmentData;
-import equipment.equipmentid.EquipmentIdEntity;
 import java.util.ArrayList;
-import javax.inject.Inject;
 
 /**
  * TODO: Documentation

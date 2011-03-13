@@ -2,7 +2,6 @@ package members.staff;
 
 import Data.StaffData;
 import java.util.ArrayList;
-import javax.inject.Inject;
 
 /**
  * TODO: Documentation

@@ -2,8 +2,6 @@ package room;
 
 import Data.RoomData;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-import javax.inject.Inject;
 
 /**
  * TODO: Documentation
@@ -39,4 +37,8 @@ public class RoomRepository
 
         return room;
     }
+
+    //TODO: Find rooms by capacity
+
+    //TODO: Find rooms by type
 }

@@ -6,7 +6,6 @@ import equipment.Equipment;
 import java.util.ArrayList;
 import java.util.Date;
 import members.AbstractMemberEntity;
-import members.student.Student;
 import room.Room;
 
 /**
@@ -31,27 +30,68 @@ public class BookingRepository
 
         //Loop through all bookings and add the room from bookings of type RoomBooking
         //to the return ArrayList
-        for( Booking b : bookingData.getBookings() )
+        for( RoomBooking b : bookingData.getRoomBookings() )
         {
-            if( b instanceof RoomBooking )
-            {
-                bookedRooms.add( ( (RoomBooking) b ).getRoom() );
-            }
+            bookedRooms.add( b.getRoom() );
         }
 
         return bookedRooms;
     }
 
     //A particular Room's bookings
-    public ArrayList<Room> roomBookings( Room room )
+    public ArrayList<RoomBooking> roomBookings( Room room )
     {
-        return null;
+        ArrayList<RoomBooking> roomBookings = new ArrayList<RoomBooking>();
+
+        //Room cannot be null, so return empty arraylist
+        if( room == null )
+        {
+            return roomBookings;
+        }
+
+        //Loop through all room bookings and find ones for the room passed in
+        for( RoomBooking b : bookingData.getRoomBookings() )
+        {
+            if( b.getRoom().getId() == room.getId() )
+            {
+                roomBookings.add( b );
+            }
+        }
+
+        return roomBookings;
     }
 
     //Find if a particular Room is booked given a date range
-    public ArrayList<Booking> roomBookingsByDate( Room room, Date startDate, Date endDate )
+    public ArrayList<RoomBooking> roomBookingsByDate( Room room, Date startDate, Date endDate )
     {
-        return null;
+        Exception validation = null;
+
+        //Dates must not be null, and start date must be before end date
+        validation = validateDates( startDate, endDate );
+        if( validation != null )
+        {
+            //throw validation;
+            return null;
+        }
+
+        ArrayList<RoomBooking> roomBookingsByDate = new ArrayList<RoomBooking>();
+
+        //Room cannot be null, so return empty arraylist
+        if( room == null )
+        {
+            return roomBookingsByDate;
+        }
+
+        //Loop through all room bookings and find ones for the room in the date range
+        for( RoomBooking b : bookingData.getRoomBookings() )
+        {
+            if( ( b.getRoom().getId() == room.getId() ) && ( b.getTimeStart().getTime() >= startDate.getTime() ) && ( b.getTimeEnd().getTime() <= endDate.getTime() ) )
+            {
+                roomBookingsByDate.add( b );
+            }
+        }
+
+        return roomBookingsByDate;
     }
 
     /**
@@ -65,12 +105,9 @@ public class BookingRepository
 
         //Loop through all bookings and add the equipment from bookings of type EquipmentBooking
         //to the return ArrayList
-        for( Booking b : bookingData.getBookings() )
+        for( EquipmentBooking b : bookingData.getEquipmentBookings() )
         {
-            if( b instanceof EquipmentBooking )
-            {
-                bookedEquipment.add( ( (EquipmentBooking) b ).getEquipment() );
-            }
+            bookedEquipment.add( b.getEquipment() );
         }
 
         return bookedEquipment;
@@ -83,15 +120,59 @@ public class BookingRepository
      *
      * @return ArrayList of the equipment's bookings.
      */
-    public ArrayList<Booking> equipmentBookings( AbstractEquipmentEntity equipment )
+    public ArrayList<EquipmentBooking> equipmentBookings( AbstractEquipmentEntity equipment )
     {
-        return null;
+        ArrayList<EquipmentBooking> equipmentBookings = new ArrayList<EquipmentBooking>();
+
+        //Room cannot be null, so return empty arraylist
+        if( equipment == null )
+        {
+            return equipmentBookings;
+        }
+
+        //Loop through all room bookings and find ones for the room passed in
+        for( EquipmentBooking b : bookingData.getEquipmentBookings() )
+        {
+            if( b.getEquipment().getId() == equipment.getId() )
+            {
+                equipmentBookings.add( b );
+            }
+        }
+
+        return equipmentBookings;
     }
 
     //Find if a particular Equipment is booked given a date range
-    public ArrayList<Booking> equipmentBookingsByDate( AbstractEquipmentEntity equipment, Date startDate, Date endDate )
+    public ArrayList<EquipmentBooking> equipmentBookingsByDate( AbstractEquipmentEntity equipment, Date startDate, Date endDate )
     {
-        return null;
+        Exception validation = null;
+
+        //Dates must not be null, and start date must be before end date
+        validation = validateDates( startDate, endDate );
+        if( validation != null )
+        {
+            //throw validation;
+            return null;
+        }
+
+        ArrayList<EquipmentBooking> equipmentBookingsByDate = new ArrayList<EquipmentBooking>();
+
+        //Room cannot be null, so return empty arraylist
+        if( equipment == null )
+        {
+            return equipmentBookingsByDate;
+        }
+
+        //Loop through all room bookings and find ones for the room in the date range
+        for( EquipmentBooking b : bookingData.getEquipmentBookings() )
+        {
+            if( ( b.getEquipment().getId() == equipment.getId() ) && ( b.getTimeStart().getTime() >= startDate.getTime() ) && ( b.getTimeEnd().getTime() <= endDate.getTime() ) )
+            {
+                equipmentBookingsByDate.add( b );
+            }
+        }
+
+        return equipmentBookingsByDate;
     }
 
     /**
@@ -114,7 +195,7 @@ public class BookingRepository
 
         //Loop through all bookings and add bookings for the member passed in
         //to the return ArrayList
-        for( Booking b : bookingData.getBookings() )
+        for( Booking b : bookingData.getMemberBookings() )
         {
             if( ( b.getBookingName() != null ) && ( b.getBookingName().getId() == member.getId() ) )
             {
@@ -132,7 +213,7 @@ public class BookingRepository
      *
      * @return
      */
-    public float getBookingCharge( Booking booking )
+    public float getBookingCharge( AbstractBooking booking )
     {
         Exception validation = null;
 
@@ -147,18 +228,39 @@ public class BookingRepository
         //Calculate charge from booking items
         //Assume for the moment bookings only available to Staff and Students
         float totalCharge = 0;
-        if( booking.getBookingName() instanceof Student )
+        if( booking instanceof BookingFee )
         {
-            if( ( booking instanceof RoomBooking ) && ( ( (RoomBooking) booking ).getRoom() instanceof BookingFee ) )
-            {
-            }
-            else if( ( booking instanceof EquipmentBooking ) &&
-                     ( ( (EquipmentBooking) booking ).getEquipment() instanceof BookingFee ) )
-            {
-            }
+            totalCharge = ( (BookingFee) booking ).getBookingFee();
         }
 
         return totalCharge;
+    }
+
+    /**
+     * Validate that dates are not null, and that a start date does not come after an ending date.
+     *
+     * @param startDate: The first date in a date range
+     * @param endDate:   The last date in a date range
+     *
+     * @return {@code NullPointerException} if one of the dates are {@code null}. {@code Exception} if the start date
+     *         and time is a later date than the start date and time. {@code Null} if valid.
+     */
+    private Exception validateDates( Date startDate, Date endDate )
+    {
+        //Must have a start and end time
+        if( ( startDate == null ) || ( endDate == null ) )
+        {
+            return new NullPointerException( "Arguments [startDate] and [endDate] must not be null." );
+        }
+
+        //End time must not be before start time
+        if( endDate.before( startDate ) )
+        {
+            return new Exception( "[startDate] must not be before [endDate]." );
+        }
+
+        //Return null if validation successful
+        return null;
     }
 
     /**
@@ -169,7 +271,7 @@ public class BookingRepository
      * @return {@code null} if booking exists in repository. {@code NullPointerException} when booking is null. {@code
      *         Exception} when booking doesn't exist.
      */
-    private Exception validBooking( Booking booking )
+    private Exception validBooking( AbstractBooking booking )
     {
         //Booking must not be null
         if( booking == null )

@@ -1,7 +1,3 @@
-import Data.EquipmentData;
-import Data.RoomData;
-import javax.inject.Inject;
-
 /**
  * TODO: Documentation
  * Class for user actions that report details back to user?
