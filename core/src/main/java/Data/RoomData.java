@@ -2,7 +2,10 @@ package Data;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.inject.Inject;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import room.Room;
 
 import static room.RoomType.CLASS_ROOM;
@@ -15,9 +18,11 @@ import static room.RoomType.LECTURE_THEATRE;
  * @author edward.yakop@mincom.com
  * @since 0.3
  */
-@Entity
 public class RoomData
 {
+    @PersistenceContext
+    EntityManager em;
+
     private ArrayList<Room> rooms = new ArrayList<Room>();
 
     public ArrayList<Room> getRooms()
@@ -52,6 +57,7 @@ public class RoomData
                 room.setRoomType( CLASS_ROOM );
                 room.setCapacity( random.nextInt() );
 
+                em.persist( room );
                 rooms.add( room );
             }
 
@@ -63,6 +69,7 @@ public class RoomData
                 room.setRoomType( LECTURE_THEATRE );
                 room.setCapacity( random.nextInt() );
 
+                em.persist( room );
                 rooms.add( room );
             }
 
@@ -74,6 +81,7 @@ public class RoomData
                 room.setRoomType( COMPUTER_LABORATORY );
                 room.setCapacity( random.nextInt() );
 
+                em.persist( room );
                 rooms.add( room );
             }
         }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+  <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
+    <description>
+      Hibernate using JPA
+    </description>
+
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+    <class>room.Room</class>
+    <!--<class>com.innotrekker.app.entity.Order</class>-->
+
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:Facility;create=true"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+
+      <!--<property name="hibernate.show_sql" value="true"/>-->
+      <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+    </properties>
+
+  </persistence-unit>
+
+</persistence>

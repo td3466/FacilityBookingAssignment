@@ -1,9 +1,6 @@
 package Data;
 
-import booking.AbstractBooking;
 import booking.Booking;
-import booking.EquipmentBooking;
-import booking.RoomBooking;
 import java.util.ArrayList;
 
 /**
@@ -12,25 +9,25 @@ import java.util.ArrayList;
  */
 public class BookingData
 {
-    private ArrayList<AbstractBooking> bookings = new ArrayList<AbstractBooking>(  );
+    private ArrayList<Booking> bookings = new ArrayList<Booking>(  );
 
-    private ArrayList<RoomBooking> roomBookings = new ArrayList<RoomBooking>(  );
+    private ArrayList<Booking> roomBookings = new ArrayList<Booking>(  );
 
-    private ArrayList<EquipmentBooking> equipmentBookings = new ArrayList<EquipmentBooking>(  );
+    private ArrayList<Booking> equipmentBookings = new ArrayList<Booking>(  );
 
     private ArrayList<Booking> memberBookings = new ArrayList<Booking>(  );
 
-    public ArrayList<AbstractBooking> getBookings()
+    public ArrayList<Booking> getBookings()
     {
         return bookings;
     }
 
-    public ArrayList<RoomBooking> getRoomBookings()
+    public ArrayList<Booking> getRoomBookings()
     {
         return roomBookings;
     }
 
-    public ArrayList<EquipmentBooking> getEquipmentBookings()
+    public ArrayList<Booking> getEquipmentBookings()
     {
         return equipmentBookings;
     }

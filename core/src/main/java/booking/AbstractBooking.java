@@ -7,9 +7,8 @@ import java.util.Date;
  * TODO: Documentation
  *
  * @author edward.yakop@mincom.com
- *
- * 26/2/2011
- * Changed timeend to be calculated and a getter only.
+ *         <p/>
+ *         26/2/2011 Changed timeend to be calculated and a getter only.
  */
 public abstract class AbstractBooking
 {
@@ -28,6 +27,7 @@ public abstract class AbstractBooking
     // with knowing hte bookings that have finished?
     private boolean completed;
 
+    private AbstractBookingItem bookingItem;
 
     public Date getBookingDate()
     {
@@ -51,11 +51,19 @@ public abstract class AbstractBooking
 
     public Date getTimeEnd()
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime( timeStart );
-        calendar.add( Calendar.HOUR_OF_DAY, duration );
-        return calendar.getTime();
-//        return timeEnd;
+        if( timeStart == null )
+        {
+            //Return null if no start time set
+            return null;
+        }
+        else
+        {
+            //Calculate end time from start time and duration
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime( timeStart );
+            calendar.add( Calendar.HOUR_OF_DAY, duration );
+            return calendar.getTime();
+        }
     }
 
 //    public void setTimeEnd( Date timeEnd )
@@ -81,6 +89,16 @@ public abstract class AbstractBooking
     public void setCancelled( boolean cancelled )
     {
         this.cancelled = cancelled;
+    }
+
+    public AbstractBookingItem getBookingItem()
+    {
+        return bookingItem;
+    }
+
+    public void setBookingItem( AbstractBookingItem bookingItem )
+    {
+        this.bookingItem = bookingItem;
     }
 
     public boolean isCompleted()

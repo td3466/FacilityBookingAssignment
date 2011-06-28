@@ -16,11 +16,9 @@ import members.AbstractMemberEntity;
  *
  * TODO: Apply member charges to the booking.
  */
-public class Booking
+public class Booking extends AbstractBooking
 {
     private AbstractMemberEntity bookingName;
-
-    private AbstractBooking booking;
 
     public AbstractMemberEntity getBookingName()
     {
@@ -31,15 +29,4 @@ public class Booking
     {
         this.bookingName = bookingName;
     }
-
-    public AbstractBooking getBooking()
-    {
-        return booking;
-    }
-
-    public void setBooking( AbstractBooking booking )
-    {
-        this.booking = booking;
-    }
-
 }

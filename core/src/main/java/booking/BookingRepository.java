@@ -1,7 +1,6 @@
 package booking;
 
 import Data.BookingData;
-import equipment.AbstractEquipmentEntity;
 import equipment.Equipment;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,9 +9,11 @@ import room.Room;
 
 /**
  * TODO: Documentation
+ //TODO: Repplace with connection to database
  *
  * @author edward.yakop@mincom.com
  * @since 0.3
+
  */
 public class BookingRepository
 {
@@ -28,20 +29,23 @@ public class BookingRepository
     {
         ArrayList<Room> bookedRooms = new ArrayList<Room>();
 
-        //Loop through all bookings and add the room from bookings of type RoomBooking
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
+        //Loop through all bookings and add the room from bookings of type Booking
         //to the return ArrayList
-        for( RoomBooking b : bookingData.getRoomBookings() )
+        for( AbstractBooking b : bookingData.getRoomBookings() )
         {
-            bookedRooms.add( b.getRoom() );
+            bookedRooms.add( (Room) b.getBookingItem() );
         }
 
         return bookedRooms;
     }
 
     //A particular Room's bookings
-    public ArrayList<RoomBooking> roomBookings( Room room )
+    public ArrayList<Booking> roomBookings( Room room )
     {
-        ArrayList<RoomBooking> roomBookings = new ArrayList<RoomBooking>();
+        ArrayList<Booking> roomBookings = new ArrayList<Booking>();
 
         //Room cannot be null, so return empty arraylist
         if( room == null )
@@ -49,10 +53,13 @@ public class BookingRepository
             return roomBookings;
         }
 
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
         //Loop through all room bookings and find ones for the room passed in
-        for( RoomBooking b : bookingData.getRoomBookings() )
+        for( Booking b : bookingData.getRoomBookings() )
         {
-            if( b.getRoom().getId() == room.getId() )
+            if( ( (Room) b.getBookingItem() ).getId() == room.getId() )
             {
                 roomBookings.add( b );
             }
@@ -62,7 +69,7 @@ public class BookingRepository
     }
 
     //Find if a particular Room is booked given a date range
-    public ArrayList<RoomBooking> roomBookingsByDate( Room room, Date startDate, Date endDate )
+    public ArrayList<Booking> roomBookingsByDate( Room room, Date startDate, Date endDate )
     {
         Exception validation = null;
 
@@ -74,7 +81,7 @@ public class BookingRepository
             return null;
         }
 
-        ArrayList<RoomBooking> roomBookingsByDate = new ArrayList<RoomBooking>();
+        ArrayList<Booking> roomBookingsByDate = new ArrayList<Booking>();
 
         //Room cannot be null, so return empty arraylist
         if( room == null )
@@ -82,10 +89,13 @@ public class BookingRepository
             return roomBookingsByDate;
         }
 
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
         //Loop through all room bookings and find ones for the room in the date range
-        for( RoomBooking b : bookingData.getRoomBookings() )
+        for( Booking b : bookingData.getRoomBookings() )
         {
-            if( ( b.getRoom().getId() == room.getId() ) && ( b.getTimeStart().getTime() >= startDate.getTime() ) && ( b.getTimeEnd().getTime() <= endDate.getTime() ) )
+            if( ( ( (Room) b.getBookingItem() ).getId() == room.getId() ) && ( b.getTimeStart().getTime() >= startDate.getTime() ) && ( b.getTimeEnd().getTime() <= endDate.getTime() ) )
             {
                 roomBookingsByDate.add( b );
             }
@@ -103,11 +113,14 @@ public class BookingRepository
     {
         ArrayList<Equipment> bookedEquipment = new ArrayList<Equipment>();
 
-        //Loop through all bookings and add the equipment from bookings of type EquipmentBooking
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
+        //Loop through all bookings and add the equipment from bookings of type Booking
         //to the return ArrayList
-        for( EquipmentBooking b : bookingData.getEquipmentBookings() )
+        for( Booking b : bookingData.getEquipmentBookings() )
         {
-            bookedEquipment.add( b.getEquipment() );
+            bookedEquipment.add( (Equipment) b.getBookingItem() );
         }
 
         return bookedEquipment;
@@ -120,9 +133,9 @@ public class BookingRepository
      *
      * @return ArrayList of the equipment's bookings.
      */
-    public ArrayList<EquipmentBooking> equipmentBookings( AbstractEquipmentEntity equipment )
+    public ArrayList<Booking> equipmentBookings( Equipment equipment )
     {
-        ArrayList<EquipmentBooking> equipmentBookings = new ArrayList<EquipmentBooking>();
+        ArrayList<Booking> equipmentBookings = new ArrayList<Booking>();
 
         //Room cannot be null, so return empty arraylist
         if( equipment == null )
@@ -130,10 +143,13 @@ public class BookingRepository
             return equipmentBookings;
         }
 
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
         //Loop through all room bookings and find ones for the room passed in
-        for( EquipmentBooking b : bookingData.getEquipmentBookings() )
+        for( Booking b : bookingData.getEquipmentBookings() )
         {
-            if( b.getEquipment().getId() == equipment.getId() )
+            if( ( (Equipment) b.getBookingItem() ).getId() == equipment.getId() )
             {
                 equipmentBookings.add( b );
             }
@@ -143,7 +159,7 @@ public class BookingRepository
     }
 
     //Find if a particular Equipment is booked given a date range
-    public ArrayList<EquipmentBooking> equipmentBookingsByDate( AbstractEquipmentEntity equipment, Date startDate, Date endDate )
+    public ArrayList<Booking> equipmentBookingsByDate( Equipment equipment, Date startDate, Date endDate )
     {
         Exception validation = null;
 
@@ -155,7 +171,7 @@ public class BookingRepository
             return null;
         }
 
-        ArrayList<EquipmentBooking> equipmentBookingsByDate = new ArrayList<EquipmentBooking>();
+        ArrayList<Booking> equipmentBookingsByDate = new ArrayList<Booking>();
 
         //Room cannot be null, so return empty arraylist
         if( equipment == null )
@@ -163,10 +179,13 @@ public class BookingRepository
             return equipmentBookingsByDate;
         }
 
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
         //Loop through all room bookings and find ones for the room in the date range
-        for( EquipmentBooking b : bookingData.getEquipmentBookings() )
+        for( Booking b : bookingData.getEquipmentBookings() )
         {
-            if( ( b.getEquipment().getId() == equipment.getId() ) && ( b.getTimeStart().getTime() >= startDate.getTime() ) && ( b.getTimeEnd().getTime() <= endDate.getTime() ) )
+            if( ( ( (Equipment) b.getBookingItem() ).getId() == equipment.getId() ) && ( b.getTimeStart().getTime() >= startDate.getTime() ) && ( b.getTimeEnd().getTime() <= endDate.getTime() ) )
             {
                 equipmentBookingsByDate.add( b );
             }
@@ -193,6 +212,9 @@ public class BookingRepository
 
         ArrayList<Booking> bookings = new ArrayList<Booking>();
 
+        //TODO: Check connection to data store is ok.
+
+        //TODO: Replace with code for database
         //Loop through all bookings and add bookings for the member passed in
         //to the return ArrayList
         for( Booking b : bookingData.getMemberBookings() )
@@ -225,13 +247,16 @@ public class BookingRepository
             return 0;
         }
 
+        //Must be a booking item to get the charge from
+        if (booking.getBookingItem() == null)
+        {
+//            throw new Exception( "Argument [booking.getBookingItem()] must not be null." );
+            return 0;
+        }
+
         //Calculate charge from booking items
         //Assume for the moment bookings only available to Staff and Students
-        float totalCharge = 0;
-        if( booking instanceof BookingFee )
-        {
-            totalCharge = ( (BookingFee) booking ).getBookingFee();
-        }
+        float totalCharge = booking.getBookingItem().getBookingFee();
 
         return totalCharge;
     }

@@ -40,9 +40,9 @@ public class BookingManagement
     BookingRepository bookingRepository = new BookingRepository();
 
     /**
-     * Create a new Room booking - Booking shouldn't clash with existing bookings
+     * Create a new booking - Booking shouldn't clash with existing bookings
      */
-    public RoomBooking createRoomBooking( AbstractMemberEntity member, Date startDateTime, Date endDateTime, Room bookingItem )
+    public AbstractBooking createBooking( AbstractMemberEntity member, Date startDateTime, Date endDateTime, AbstractBookingItem bookingItem )
     {
         Exception validation = null;
 
@@ -71,7 +71,7 @@ public class BookingManagement
         }
 
         //Booking must not clash with other bookings
-        validation = validateConflictingRoomBookings( bookingItem, startDateTime, endDateTime );
+        validation = validateConflictingBookings( bookingItem, startDateTime, endDateTime );
         if( validation != null )
         {
 //            throw validation;
@@ -79,83 +79,24 @@ public class BookingManagement
         }
 
         //Create the booking
-        RoomBooking booking = new RoomBooking();
+        Booking booking = new Booking();
         booking.setBookingDate( startDateTime );
         booking.setTimeStart( startDateTime );
-        booking.setRoom( bookingItem );
-
-        //Create member booking.
-        Booking memberBooking = new Booking();
-        memberBooking.setBookingName( member );
-        memberBooking.setBooking( booking );
+        booking.setBookingItem( bookingItem );
+        booking.setBookingName( member );
 
         //Set charges depending on if staff or student
-        if (member instanceof Student)
+        if( member instanceof Student )
         {
-            booking.setBookingFee( ( (Student) member ).getRoomFee() );
+            if( bookingItem instanceof Room )
+            {
+                bookingItem.setBookingFee( ( (Student) member ).getRoomFee() );
+            }
+            else if( bookingItem instanceof Equipment )
+            {
+                bookingItem.setBookingFee( ( (Student) member ).getEquipmentFee() );
+            }
         }
-
-        //Persist the booking
-
-        return booking;
-    }
-
-    /**
-     * Create a new Room booking - Booking shouldn't clash with existing bookings
-     */
-    public EquipmentBooking createEquipmentBooking( AbstractMemberEntity member, Date startDateTime, Date endDateTime, Equipment bookingItem )
-    {
-        Exception validation = null;
-
-        //Dates must be a valid range
-        validation = validateDates( startDateTime, endDateTime );
-        if( validation != null )
-        {
-//            throw validation;
-            return null;
-        }
-
-        //If a member specified, must be a valid member
-        validation = validMember( member );
-        if( validation != null )
-        {
-//            throw validation;
-            return null;
-        }
-
-        //BookingItem must be a valid booking item
-        validation = validBookingItem( bookingItem );
-        if( validation != null )
-        {
-//            throw validation;
-            return null;
-        }
-
-        //Booking must not clash with other bookings
-        validation = validateConflictingEquipmentBookings( bookingItem, startDateTime, endDateTime );
-        if( validation != null )
-        {
-//            throw validation;
-            return null;
-        }
-
-        //Create the booking
-        EquipmentBooking booking = new EquipmentBooking();
-        booking.setBookingDate( startDateTime );
-        booking.setTimeStart( startDateTime );
-        booking.setEquipment( bookingItem );
-
-        //Create member booking
-        Booking memberBooking = new Booking();
-        memberBooking.setBookingName( member );
-        memberBooking.setBooking( booking );
-
-        //Set charges depending on if staff or student
-        if (member instanceof Student)
-        {
-            booking.setBookingFee( ( (Student) member ).getEquipmentFee() );
-        }
-
 
         //Persist the booking
 
@@ -218,14 +159,7 @@ public class BookingManagement
         }
 
         //Dates and times must not clash with other bookings
-        if( booking instanceof RoomBooking )
-        {
-            validation = validateConflictingRoomBookings( ( (RoomBooking) booking ).getRoom(), booking.getTimeStart(), booking.getTimeEnd() );
-        }
-        else if( booking instanceof EquipmentBooking )
-        {
-            validation = validateConflictingEquipmentBookings( ( (EquipmentBooking) booking ).getEquipment(), booking.getTimeStart(), booking.getTimeEnd() );
-        }
+        validation = validateConflictingBookings( booking.getBookingItem(), booking.getTimeStart(), booking.getTimeEnd() );
         if( validation != null )
         {
 //            throw validation;
@@ -242,34 +176,23 @@ public class BookingManagement
     }
 
     /**
-     * Check that a room isn't already booked for the dat and time
+     * Check that a bookingItem isn't already booked for the dat and time
      *
-     * @return {@code NullPointerException} if one of the dates are {@code null}. {@code Exception} if the room is
-     *         already booked. {@code null} if the room is not booked.
+     * @return {@code NullPointerException} if one of the dates are {@code null}. {@code Exception} if the bookingItem
+     *         is already booked. {@code null} if the bookingItem is not booked.
      */
-    private Exception validateConflictingRoomBookings( Room room, Date startDateTime, Date endDateTime )
+    private Exception validateConflictingBookings( AbstractBookingItem bookingItem, Date startDateTime, Date endDateTime )
     {
-        if( bookingRepository.roomBookingsByDate( room, startDateTime, endDateTime ).size() > 0 )
+        if( ( bookingItem instanceof Room ) && ( bookingRepository.roomBookingsByDate( (Room) bookingItem, startDateTime, endDateTime ).size() > 0 ) )
         {
-            return new Exception( "Room [room.getId] already booked for that time." );
+            return new Exception( "Room [bookingItem.getId] already booked for that time." );
+        }
+        else if( ( bookingItem instanceof Equipment ) && ( bookingRepository.equipmentBookingsByDate( (Equipment) bookingItem, startDateTime, endDateTime ).size() > 0 ) )
+        {
+            return new Exception( "Equipment [bookingItem.getId] already booked for that time." );
         }
 
-        return null;
-    }
-
-    /**
-     * Check that a equipment isn't already booked for the dat and time
-     *
-     * @return {@code NullPointerException} if one of the dates are {@code null}. {@code Exception} if the equipment is
-     *         already booked. {@code null} if the equipment is not booked.
-     */
-    private Exception validateConflictingEquipmentBookings( Equipment equipment, Date startDateTime, Date endDateTime )
-    {
-        if( bookingRepository.equipmentBookingsByDate( equipment, startDateTime, endDateTime ).size() > 0 )
-        {
-            return new Exception( "Equipment [equipment.getId] already booked for that time." );
-        }
-        return null;
+        return new Exception( "[bookingItem] is an unknown type of booking item." );
     }
 
     /**
@@ -372,7 +295,7 @@ public class BookingManagement
      *
      * @return {@code null} if valid, otherwise {@code Exception}.
      */
-    private Exception validBookingItem( BookingFee bookableItem )
+    private Exception validBookingItem( AbstractBookingItem bookableItem )
     {
         //BookableItem must not be null
         if( bookableItem == null )

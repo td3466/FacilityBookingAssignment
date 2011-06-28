@@ -1,6 +1,8 @@
 package equipment;
 
-import booking.BookingFee;
+import booking.AbstractBookingItem;
+import equipment.equipmentid.EquipmentIdEntity;
+import java.util.Date;
 
 /**
  * TODO: Documentation
@@ -8,37 +10,70 @@ import booking.BookingFee;
  * @author edward.yakop@mincom.com
  * @since 0.3
  */
-public class Equipment extends AbstractEquipmentEntity implements BookingFee
+public class Equipment extends AbstractBookingItem
 {
-    //Encapsulated by BookingFee interface
-    private boolean bookable;
+    static final float DEFAULT_DURATION = 24;
 
-    //Encapsulated by BookingFee interface
-    private float bookingFee;
+    private EquipmentIdEntity Id;
 
+    private String name;
 
-    /*
-     * Members implemented as part of BookingFee interface
-     */
-    public void setBookable( boolean bookable )
+    private Date purchaseDate;
+
+    private String description;
+
+    public String getId()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
-        this.bookable = bookable;
+        return Id.getId();
     }
 
-    public boolean getBookable()
+    public void setId( String id )
     {
-        return bookable;  //To change body of implemented methods use File | Settings | File Templates.
+        Id.setId( id );
     }
 
-    public void setBookingFee( float fee )
+    public EquipmentIdEntity getIdGenerator() throws CloneNotSupportedException
     {
-        //To change body of implemented methods use File | Settings | File Templates.
-        bookingFee = fee;
+        //Return a copy of the class
+        // to prevent people messing with original.
+        //This is not as efficient, but a good experience
+        //understanding implementing the Cloneable interface.
+        return Id.clone();
     }
 
-    public float getBookingFee()
+    public String getName()
     {
-        return bookingFee;  //To change body of implemented methods use File | Settings | File Templates.
+        return name;
+    }
+
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+    public Date getPurchaseDate()
+    {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate( Date purchaseDate )
+    {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
+
+    public Equipment()
+    {
+        super.setDefaultDuration( DEFAULT_DURATION );
+        Id = new EquipmentIdEntity();
     }
 }

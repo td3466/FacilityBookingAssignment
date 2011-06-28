@@ -1,6 +1,10 @@
 package room;
 
-import booking.BookingFee;
+import booking.AbstractBookingItem;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * TODO: Documentation
@@ -8,19 +12,17 @@ import booking.BookingFee;
  * @author edward.yakop@mincom.com
  * @since 0.3
  */
-public class Room implements BookingFee
+@Entity
+public class Room extends AbstractBookingItem
 {
+    static final float DEFAULT_DURATION = 2;
+
+    @Id
     private String Id;
 
     private RoomType roomType;
 
     private int capacity;
-
-    //Encapsulated by BookingFee interface
-    private boolean bookable;
-
-    //Encapsulated by BookingFee interface
-    private float bookingFee;
 
     public String getId()
     {
@@ -52,29 +54,8 @@ public class Room implements BookingFee
         this.capacity = capacity;
     }
 
-
-    /*
-     * Methods implemented as part of BookingFee interface
-     */
-    public void setBookable( boolean bookable )
+    public Room()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
-        this.bookable = bookable;
-    }
-
-    public boolean getBookable()
-    {
-        return bookable;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public void setBookingFee( float fee )
-    {
-        //To change body of implemented methods use File | Settings | File Templates.
-        bookingFee = fee;
-    }
-
-    public float getBookingFee()
-    {
-        return bookingFee;  //To change body of implemented methods use File | Settings | File Templates.
+        super.setDefaultDuration( DEFAULT_DURATION );
     }
 }
