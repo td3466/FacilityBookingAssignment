@@ -1,10 +1,10 @@
-package facilitybookingsystem.impl.domain.equipment;
+package toberemoved.equipment;
 
+import toberemoved.booking.AbstractBookingItem;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import toberemoved.booking.AbstractBookingItem;
 
 /**
  * TODO: Documentation
@@ -14,18 +14,16 @@ import toberemoved.booking.AbstractBookingItem;
  */
 @Entity
 @Table( name = "EQUIPMENT" )
-public class Equipment
+public class Equipment extends AbstractBookingItem
 {
+    static final float DEFAULT_DURATION = 24;
+
     @Id
     private String Id;
 
     private String name;
 
     private Date purchaseDate;
-
-    public Equipment()
-    {
-    }
 
     public String getId()
     {
@@ -55,5 +53,10 @@ public class Equipment
     public void setPurchaseDate( Date purchaseDate )
     {
         this.purchaseDate = purchaseDate;
+    }
+
+    public Equipment()
+    {
+        super.setDefaultDuration( DEFAULT_DURATION );
     }
 }

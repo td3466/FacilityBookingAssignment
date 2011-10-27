@@ -1,11 +1,11 @@
-package facilitybookingsystem.impl.domain.room;
+package toberemoved.room;
 
+import toberemoved.booking.AbstractBookingItem;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import toberemoved.booking.AbstractBookingItem;
 
 /**
  * Class represents a Room at the Facility. Rooms can be booked. The default booking time is 2 hours.
@@ -22,28 +22,16 @@ import toberemoved.booking.AbstractBookingItem;
     } )
 @Entity
 @Table( name = "ROOM" )
-public class Room
+public class Room extends AbstractBookingItem
 {
+    static final float DEFAULT_DURATION = 2;
+
     @Id
     private String Id;
 
     private RoomType roomType;
 
     private int capacity;
-
-    public Room()
-    {
-    }
-
-    public Room( String Id, RoomType roomType, int capacity )
-    {
-        //TODO: Validate: Id cannot be null
-        //TODO: Validate: capacity must be >= 0
-
-        this.Id = Id;
-        this.roomType = roomType;
-        this.capacity = capacity;
-    }
 
     /**
      * Return the Id of the room. Id is used to uniquely identify the room.
@@ -73,5 +61,21 @@ public class Room
     public int getCapacity()
     {
         return capacity;
+    }
+
+    public Room()
+    {
+        super.setDefaultDuration( DEFAULT_DURATION );
+    }
+
+    public Room( String Id, RoomType roomType, int capacity )
+    {
+        //TODO: Validate: Id cannot be null
+        //TODO: Validate: capacity must be >= 0
+
+        super.setDefaultDuration( DEFAULT_DURATION );
+        this.Id = Id;
+        this.roomType = roomType;
+        this.capacity = capacity;
     }
 }

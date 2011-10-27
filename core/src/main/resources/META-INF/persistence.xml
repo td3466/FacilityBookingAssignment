@@ -12,8 +12,8 @@
 
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-    <class>facilitybookingsystem.impl.domain.room.Room</class>
-    <class>facilitybookingsystem.impl.domain.Data.RoomData</class>
+    <class>toberemoved.room.Room</class>
+    <class>toberemoved.Data.RoomData</class>
     <!--<class>com.innotrekker.app.entity.Order</class>-->
 
     <properties>
