@@ -1,16 +1,16 @@
 package toberemoved.booking;
 
+import facilitybookingsystem.impl.domain.equipment.EquipmentRepository;
+import facilitybookingsystem.impl.domain.room.RoomRepository;
 import toberemoved.Data.BookingData;
 import toberemoved.equipment.Equipment;
-import toberemoved.equipment.EquipmentRepository;
 import java.util.Date;
-import facilitybookingsystem.impl.domain.members.AbstractMemberEntity;
+import facilitybookingsystem.impl.domain.members.AbstractMember;
 import toberemoved.staff.Staff;
 import toberemoved.staff.StaffRepository;
 import toberemoved.student.Student;
 import toberemoved.student.StudentRepository;
 import toberemoved.room.Room;
-import toberemoved.room.RoomRepository;
 
 /**
  * TODO: Documentation AKA BookingService. Assignment requirements required the BookingService class be called
@@ -42,7 +42,7 @@ public class BookingManagement
     /**
      * Create a new booking - Booking shouldn't clash with existing bookings
      */
-    public AbstractBooking createBooking( AbstractMemberEntity member, Date startDateTime, Date endDateTime, AbstractBookingItem bookingItem )
+    public AbstractBooking createBooking( AbstractMember member, Date startDateTime, Date endDateTime, AbstractBookingItem bookingItem )
     {
         Exception validation = null;
 
@@ -229,7 +229,7 @@ public class BookingManagement
      *
      * @return {@code null} if valid, otherwise {@code Exception}.
      */
-    private Exception validMember( AbstractMemberEntity member )
+    private Exception validMember( AbstractMember member )
     {
         //BookableItem must not be null
         if( member == null )

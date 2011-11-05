@@ -1,4 +1,4 @@
-package toberemoved.room;
+package facilitybookingsystem.impl.domain.room;
 
 import java.util.List;
 import javax.inject.Named;
@@ -35,7 +35,9 @@ public class RoomRepository
             .getSingleResult();
     }
 
-    //TODO: Find rooms by capacity
+    //TODO: Find available rooms by capacity
 
-    //TODO: Find rooms by type
+    //TODO: Find available rooms by type
+
+    // TODO: Find available rooms
 }

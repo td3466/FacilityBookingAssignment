@@ -42,7 +42,7 @@ public class EquipmentData
             Equipment equipment = new Equipment();
             equipment.setName( NAME + Integer.toString( i ) );
             equipment.setPurchaseDate( Calendar.getInstance().getTime() );
-            equipment.setDescription( DESCRIPTION + Integer.toString( i ) );
+//            equipment.setDescription( DESCRIPTION + Integer.toString( i ) );
 
             equipments.add( equipment );
         }

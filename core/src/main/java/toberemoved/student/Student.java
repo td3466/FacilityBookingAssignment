@@ -1,6 +1,6 @@
 package toberemoved.student;
 
-import facilitybookingsystem.impl.domain.members.AbstractMemberEntity;
+import facilitybookingsystem.impl.domain.members.AbstractMember;
 
 /**
  * TODO: Documentation
@@ -8,7 +8,7 @@ import facilitybookingsystem.impl.domain.members.AbstractMemberEntity;
  * @author edward.yakop@mincom.com
  * @since 0.3
  */
-public class Student extends AbstractMemberEntity
+public class Student extends AbstractMember
 {
     private static final float ROOM_FEE = 2;
 

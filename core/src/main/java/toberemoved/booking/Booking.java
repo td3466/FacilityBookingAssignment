@@ -1,6 +1,6 @@
 package toberemoved.booking;
 
-import facilitybookingsystem.impl.domain.members.AbstractMemberEntity;
+import facilitybookingsystem.impl.domain.members.AbstractMember;
 
 /**
  * TODO: Documentation Assumption is that bookings are currently for members only
@@ -17,14 +17,14 @@ import facilitybookingsystem.impl.domain.members.AbstractMemberEntity;
  */
 public class Booking extends AbstractBooking
 {
-    private AbstractMemberEntity bookingName;
+    private AbstractMember bookingName;
 
-    public AbstractMemberEntity getBookingName()
+    public AbstractMember getBookingName()
     {
         return bookingName;
     }
 
-    public void setBookingName( AbstractMemberEntity bookingName )
+    public void setBookingName( AbstractMember bookingName )
     {
         this.bookingName = bookingName;
     }

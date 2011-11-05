@@ -4,7 +4,7 @@ import toberemoved.Data.BookingData;
 import toberemoved.equipment.Equipment;
 import java.util.ArrayList;
 import java.util.Date;
-import facilitybookingsystem.impl.domain.members.AbstractMemberEntity;
+import facilitybookingsystem.impl.domain.members.AbstractMember;
 import toberemoved.room.Room;
 
 /**
@@ -199,7 +199,7 @@ public class BookingRepository
      *
      * @return ArrayList of the member's bookings
      */
-    public ArrayList<Booking> allMemberBookings( AbstractMemberEntity member )
+    public ArrayList<Booking> allMemberBookings( AbstractMember member )
     {
         //Fail if no valid member
         if( member == null )

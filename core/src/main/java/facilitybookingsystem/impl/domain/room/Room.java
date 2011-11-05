@@ -5,7 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import toberemoved.booking.AbstractBookingItem;
 
 /**
  * Class represents a Room at the Facility. Rooms can be booked. The default booking time is 2 hours.
@@ -31,24 +30,44 @@ public class Room
 
     private int capacity;
 
+    /**
+     * Constructor needed for JPA. Will not compile without it.
+     */
+    @Deprecated
     public Room()
     {
     }
 
-    public Room( String Id, RoomType roomType, int capacity )
+    /**
+     * Construct a new room instance.
+     *
+     * @param id       The unique identifier of the room
+     * @param roomType The room's type
+     * @param capacity The number of people the room can hold.
+     */
+    public Room( String id, RoomType roomType, int capacity )
     {
-        //TODO: Validate: Id cannot be null
-        //TODO: Validate: capacity must be >= 0
+        //id can not be null
+        if( ( id == null ) || ( id.isEmpty() ) )
+        {
+            throw new IllegalArgumentException( "[id] must not be [null] or [empty]." );
+        }
 
-        this.Id = Id;
+        //Capacity must be > 0
+        if( capacity < 1 )
+        {
+            throw new IllegalArgumentException( "[capacity] must be [1] or more." );
+        }
+
+        this.Id = id;
         this.roomType = roomType;
         this.capacity = capacity;
     }
 
     /**
-     * Return the Id of the room. Id is used to uniquely identify the room.
+     * Return the id of the room. id is used to uniquely identify the room.
      *
-     * @return String The room's Id
+     * @return String The room's id; must not return {@code null}.
      */
     public String getId()
     {
@@ -68,7 +87,7 @@ public class Room
     /**
      * Returns the maximum capacity of the room.
      *
-     * @return {@code int} The number of people room can hold
+     * @return {@code int} The number of people room can hold; must return a number greater than 0.
      */
     public int getCapacity()
     {
